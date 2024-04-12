@@ -87,17 +87,10 @@ public abstract class ItemStackMixin implements CapabilityProviderExtension, Ite
 
 	@Override
 	public void initCapabilities() {
-		this.gatherCapabilities(() -> {
-			var item = this.item;
+		if (item == null)
+			return;
 
-			if (item == null)
-				item = this.getItem();
-
-			if (item == null)
-				return null;
-
-			return item.initCapabilities((ItemStack) (Object) this, this.capNBT);
-		});
+		this.gatherCapabilities(() -> item.initCapabilities((ItemStack) (Object) this, this.capNBT));
 		if (this.capNBT != null)
 			this.deserializeCaps(this.capNBT);
 	}
